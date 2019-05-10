@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="container">
                 <div class="col-md-3">
                 <h1 class="text-center">Faça seu Login</h1>
+                Usario: admin e senha:admin
                  <form class="form-signin" role="form" method="post" action="<?= base_url('index.php/login/logar') ?>">
                     <div class="form-group">
                         <input class="form-control input-lg" placeholder="Username" type="username" name="username" id="username" required="true">
