@@ -1,0 +1,41 @@
+Documentação
+
+http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/toc.html
+
+Doctrine 2.2.2
+
+http://www.doctrine-project.org/downloads/DoctrineORM-2.2.2-full.tar.gz
+
+CodeIgniter 2.1.2
+
+http://codeigniter.com/download.php
+
+Código para .htaccess
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+\application\config\config.php Linha 29
+
+$config['index_page'] = 'index.php'; => $config['index_page'] = '';
+
+\application\config\autoload.php
+
+Linha 40: $autoload['packages'] = array(APPPATH.'third_party/DoctrineORM-2.2.2');
+Linha 55: $autoload['libraries'] = array('database', 'Doctrine');
+Linha 67: $autoload['helper'] = array('url');
+
+Testando o CodeIgniter: http://localhost/doctrine/
+
+Referência: http://www.joelverhagen.com/blog/2011/05/setting-up-codeigniter-2-with-doctrine-2-the-right-way/
+
+
+
+fpdf>>>
+http://www.codedrinks.com/como-integrar-la-libreria-fpdf-con-el-framework-codeigniter/
+http://www.botecodigital.info/php/criando-arquivos-pdf-com-php-e-classe-fpdf/
+https://www.oficinadanet.com.br/artigo/php/sistema-de-login-em-php-com-codeigniter
+
+
