@@ -74,7 +74,7 @@ class subenquete {
  	return $this->nota;
  }
 
- public function setNota($note){            
+ public function setNota($nota){            
  	$this->nota = $nota;
  	return $this->nota;
  }

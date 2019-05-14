@@ -74,14 +74,101 @@ var $chavePrimaria = "id";
 	}
 
 
+	 public function Salvar(){	  	
+	  	$post = $_POST;
+		//var_dump($post);
+		/*exit();*/
+	  	$descricao='';
+	  	$nota='';
+	  	$inserirProtocolo=true;
+	  	$post = $_POST;	
+	  	$itensProtocolo = true;	
+	  	$this->doctrine->em->getConnection()->beginTransaction();
+	  	try{	  		
+	  		//if($id==''){
+				
+	  			$protocolo = new Entity\Enquete();   
+	 			$protocolo->setDescricao($post['cadastro']['descricao']);
+	 	                  
+	 			//echo'==>'.$post['cadastro']['descricao'];exit();
+	 			
+	  		//}
+	  		/*else{
+	  			$protocolo = $this->doctrine->em->find('Entity\Enquete', $post['enquete']['id']); 
+	  			if(count($protocolo->getItens()) > 0){
+	  				foreach ($protocolo->getItens() as $item){
+	  					$this->doctrine->em->remove($item);					
+	  				}
+	  			}
+	  		}*/
+
+	  		if($inserirProtocolo){	  			
+	  			$this->doctrine->em->persist($protocolo); 	
+	  			$arrayArquivoprotocoloDigital = array();	
+				$this->doctrine->em->flush();
+			}
+
+			
+			/*if(empty($quantidade)||$quantidade==0||$quantidade==''){
+				$this->alerta("Campo Quantidade é Obrigatório",false);															
+			}*/		
+			
+			if(isset($post['enquete']['descricao']) && $post['enquete']['descricao']!=''){	
+				$descricao=$post['enquete']['descricao'];
+			}else{
+				unset($post['enquete']['descricao']);
+			}
+
+			if(isset($post['enquete']['nota']) && $post['enquete']['nota']!=''){
+				$nota=$post['enquete']['nota'];
+			}else{
+				unset($post['enquete']['nota']);
+			}
+		
+
+			if($itensProtocolo){	
+				if($post['enquete']['descricao']!=null){
+					for($i=0; $i < count($post['enquete']['descricao']); $i++){			
+						$_itensProtocolo = new Entity\Subenquete;					
+						if($descricao!=''){
+							$_itensProtocolo->setDescricao($post['enquete']['descricao'][$i]);
+						}
+						$_itensProtocolo->setDescricao($post['enquete']['descricao'][$i]);						
+						$_itensProtocolo->setNota($post['enquete']['nota'][$i]);
+						
+						$_itensProtocolo->setIdEnquete($protocolo);					
+						if(isset($post['enquete']['nota']) && $post['enquete']['nota'][$i]!=''){
+							$this->doctrine->em->persist($_itensProtocolo);	
+						}								
+					}
+				}
+				//echo'acesssou aqui'; exit();			
+
+				$this->doctrine->em->flush();
+				$this->doctrine->em->getConnection()->commit();
+				//$this->alerta('Operação realizada com SUCESSO!',true);
+				redirect();
+	 	 		redirect(site_url('admin/home',$enquete));
+			}
+		}catch(Exception $err){
+			$this->doctrine->em->getConnection()->rollback();
+			log_message("error", $err->getMessage());
+			$this->pre(addslashes($err->getMessage()).addslashes($err->getTraceAsString()));
+			return false;  
+		}
+	
+	 }
+
+
 	 /**
 	 * Método principal do mini-crud
 	 * @param nenhum
 	 * @return view
 	 */	 
-	 public function Salvar(){
+	 public function Salvar1(){
 
 	 	$post = $_POST;
+	 	var_dump($post); exit();
    		  
 	 	$enquete['enquete'] = new Entity\Enquete();   
 	 	$enquete['enquete']->setDescricao($post['descricao']);
